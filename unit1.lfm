@@ -1,0 +1,360 @@
+object Form1: TForm1
+  Left = 318
+  Height = 488
+  Top = 144
+  Width = 960
+  AllowDropFiles = True
+  Caption = 'TTCompressor'
+  ClientHeight = 488
+  ClientWidth = 960
+  Menu = MainMenu1
+  LCLVersion = '4.8.0.0'
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnDropFiles = FormDropFiles
+  OnShow = FormShow
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 18
+    Top = 470
+    Width = 960
+    Panels = <>
+  end
+  object PanelProgress: TPanel
+    Left = 0
+    Height = 84
+    Top = 386
+    Width = 960
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 84
+    ClientWidth = 960
+    TabOrder = 1
+    Visible = False
+    object lblProgress: TLabel
+      Left = 10
+      Height = 16
+      Top = 6
+      Width = 70
+      Caption = 'lblProgress'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object ProgressBar1: TProgressBar
+      Left = 10
+      Height = 20
+      Top = 28
+      Width = 826
+      Anchors = [akTop, akLeft, akRight]
+      Max = 100000
+      TabOrder = 0
+    end
+    object lblFile: TLabel
+      Left = 10
+      Height = 17
+      Top = 54
+      Width = 826
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
+      Caption = 'lblFile'
+      ParentColor = False
+    end
+    object lblTime: TLabel
+      Left = 10
+      Height = 17
+      Top = 6
+      Width = 826
+      Alignment = taRightJustify
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
+      Caption = 'lblTime'
+      ParentColor = False
+    end
+    object btnCancel: TButton
+      Left = 846
+      Height = 30
+      Top = 24
+      Width = 104
+      Anchors = [akTop, akRight]
+      Caption = 'Annulla'
+      TabOrder = 1
+      OnClick = btnCancelClick
+    end
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 46
+    Top = 0
+    Width = 960
+    AutoSize = True
+    ButtonHeight = 44
+    ButtonWidth = 44
+    Caption = 'ToolBar1'
+    EdgeBorders = [ebBottom]
+    Images = ImageListTool
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    object tbBack: TToolButton
+      Left = 1
+      Hint = 'Indietro (Alt+Sinistra)'
+      Top = 0
+      Enabled = False
+      ImageIndex = 6
+      OnClick = actBackExecute
+    end
+    object tbForward: TToolButton
+      Left = 45
+      Hint = 'Avanti (Alt+Destra)'
+      Top = 0
+      Enabled = False
+      ImageIndex = 7
+      OnClick = actForwardExecute
+    end
+    object tbUp: TToolButton
+      Left = 89
+      Hint = 'Livello superiore (Alt+Su)'
+      Top = 0
+      Enabled = False
+      ImageIndex = 8
+      OnClick = actUpExecute
+    end
+    object tbSep1: TToolButton
+      Left = 133
+      Height = 44
+      Top = 0
+      Style = tbsDivider
+    end
+    object tbNew: TToolButton
+      Left = 138
+      Hint = 'Crea nuovo archivio'
+      Top = 0
+      ImageIndex = 0
+      OnClick = actNewExecute
+    end
+    object tbAdd: TToolButton
+      Left = 182
+      Hint = 'Aggiungi all''archivio'
+      Top = 0
+      ImageIndex = 1
+      OnClick = actAddExecute
+    end
+    object tbExtract: TToolButton
+      Left = 226
+      Hint = 'Estrai nella cartella'
+      Top = 0
+      ImageIndex = 2
+      OnClick = actExtractExecute
+    end
+    object tbTest: TToolButton
+      Left = 270
+      Hint = 'Verifica integrità file'
+      Top = 0
+      ImageIndex = 3
+      OnClick = actTestExecute
+    end
+    object tbDelete: TToolButton
+      Left = 314
+      Hint = 'Cancella file'
+      Top = 0
+      ImageIndex = 4
+      OnClick = actDeleteExecute
+    end
+    object tbFind: TToolButton
+      Left = 358
+      Hint = 'Trova file'
+      Top = 0
+      ImageIndex = 5
+      OnClick = actFindExecute
+    end
+  end
+  object TreeFolders: TLazVirtualStringTree
+    Left = 0
+    Height = 340
+    Top = 46
+    Width = 260
+    Align = alLeft
+    DefaultText = 'Node'
+    Header.AutoSizeIndex = 0
+    Header.Columns = <>
+    Header.MainColumn = -1
+    TabOrder = 3
+    OnResize = TreeFoldersResize
+  end
+  object Splitter1: TSplitter
+    Left = 260
+    Height = 340
+    Top = 46
+    Width = 6
+  end
+  object TreeFiles: TLazVirtualStringTree
+    Left = 266
+    Height = 340
+    Top = 46
+    Width = 694
+    Align = alClient
+    DefaultText = 'Node'
+    Header.AutoSizeIndex = 0
+    Header.Columns = <>
+    Header.MainColumn = -1
+    PopupMenu = PopupFiles
+    TabOrder = 5
+    OnResize = TreeFilesResize
+  end
+  object ImageListTool: TImageList
+    Height = 32
+    Width = 32
+    Left = 120
+    Top = 120
+  end
+  object MainMenu1: TMainMenu
+    Left = 120
+    Top = 180
+    object miArchive: TMenuItem
+      Caption = '&Archivio'
+      object miNew: TMenuItem
+        Caption = '&Nuovo archivio...'
+        OnClick = actNewExecute
+      end
+      object miOpen: TMenuItem
+        Caption = '&Apri archivio...'
+        OnClick = miOpenClick
+      end
+      object miSep1: TMenuItem
+        Caption = '-'
+      end
+      object miAdd: TMenuItem
+        Caption = 'A&ggiungi all''archivio...'
+        OnClick = actAddExecute
+      end
+      object miExtract: TMenuItem
+        Caption = '&Estrai nella cartella...'
+        OnClick = actExtractExecute
+      end
+      object miTest: TMenuItem
+        Caption = '&Verifica integrità'
+        OnClick = actTestExecute
+      end
+      object miRepair: TMenuItem
+        Caption = '&Ripara archivio...'
+        OnClick = miRepairClick
+      end
+      object miAddRec: TMenuItem
+        Caption = 'Aggiungi dati di rec&upero...'
+        OnClick = miAddRecClick
+      end
+      object miDelete: TMenuItem
+        Caption = '&Cancella file'
+        OnClick = actDeleteExecute
+      end
+      object miFind: TMenuItem
+        Caption = '&Trova file...'
+        OnClick = actFindExecute
+      end
+      object miSep2: TMenuItem
+        Caption = '-'
+      end
+      object miQuit: TMenuItem
+        Caption = '&Esci'
+        OnClick = miQuitClick
+      end
+    end
+    object miEdit: TMenuItem
+      Caption = '&Modifica'
+      object miSelectAll: TMenuItem
+        Caption = 'Seleziona &tutto'
+        OnClick = miSelectAllClick
+      end
+    end
+    object miGo: TMenuItem
+      Caption = '&Vai'
+      object miBack: TMenuItem
+        Caption = '&Indietro'
+        Enabled = False
+        ShortCut = 32805
+        OnClick = actBackExecute
+      end
+      object miForward: TMenuItem
+        Caption = '&Avanti'
+        Enabled = False
+        ShortCut = 32807
+        OnClick = actForwardExecute
+      end
+      object miUp: TMenuItem
+        Caption = '&Livello superiore'
+        Enabled = False
+        ShortCut = 32806
+        OnClick = actUpExecute
+      end
+    end
+    object miHelp: TMenuItem
+      Caption = '&Aiuto'
+      object miHelpRecovery: TMenuItem
+        Caption = '&Dati di recupero: quale scegliere?'
+        OnClick = miHelpRecoveryClick
+      end
+      object miAbout: TMenuItem
+        Caption = '&Informazioni su TTCompressor'
+        OnClick = miAboutClick
+      end
+    end
+  end
+  object PopupAdd: TPopupMenu
+    Left = 120
+    Top = 240
+    object pmAddFiles: TMenuItem
+      Caption = 'Aggiungi file...'
+      OnClick = pmAddFilesClick
+    end
+    object pmAddDir: TMenuItem
+      Caption = 'Aggiungi cartella...'
+      OnClick = pmAddDirClick
+    end
+  end
+  object PopupFiles: TPopupMenu
+    Left = 120
+    Top = 300
+    object pmExtract: TMenuItem
+      Caption = 'Estrai...'
+      OnClick = actExtractExecute
+    end
+    object pmTest: TMenuItem
+      Caption = 'Verifica integrità'
+      OnClick = actTestExecute
+    end
+    object pmDelete: TMenuItem
+      Caption = 'Cancella'
+      OnClick = actDeleteExecute
+    end
+    object pmSelectAll: TMenuItem
+      Caption = 'Seleziona tutto'
+      OnClick = miSelectAllClick
+    end
+  end
+  object TimerJob: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = TimerJobTimer
+    Left = 120
+    Top = 360
+  end
+  object OpenArchiveDialog: TOpenDialog
+    Title = 'Apri archivio'
+    Filter = 'Archivi|*.7z;*.zip;*.rar;*.tar;*.gz;*.tgz;*.bz2;*.tbz2;*.xz;*.txz;*.lzma;*.z;*.wim;*.iso;*.cab;*.arj;*.cpio;*.rpm;*.deb;*.lzh;*.lha;*.chm;*.dmg;*.vhd;*.vhdx;*.vmdk;*.img;*.squashfs;*.xar;*.jar;*.apk;*.epub;*.docx;*.xlsx;*.odt;*.ods|Tutti i file|*'
+    Left = 200
+    Top = 120
+  end
+  object AddFilesDialog: TOpenDialog
+    Title = 'Seleziona i file da aggiungere'
+    Options = [ofAllowMultiSelect, ofFileMustExist, ofEnableSizing, ofViewDetail]
+    Left = 200
+    Top = 180
+  end
+  object AddDirDialog: TSelectDirectoryDialog
+    Title = 'Seleziona la cartella da aggiungere'
+    Left = 200
+    Top = 240
+  end
+end
